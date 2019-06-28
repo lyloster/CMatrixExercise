@@ -1,11 +1,14 @@
 #include "matrix.h"
 #include<stdio.h>
 #include<stdlib.h>
+#include <time.h>
 
 // Static functions are only visibile in the file in which they're declared
 
 // Zero-s out all of the matri'x vals
 static void emptyOutMatrix(matrix* m);
+// Creates a matrix with random values
+static void randomOutMatrix (matrix *m);
 // Allocates memory for m->val based on m->width and m->height
 static void allocMatrixInternal(matrix* m);
 // Free all space associated with m->val
@@ -25,7 +28,7 @@ matrix* createMatrix(int height, int width, enum matrixType type) {
             // TODO:
             break;
         case RANDOM:
-            // TODO:
+            randomOutMatrix (m);
             break;
         default:
             break;
@@ -78,4 +81,18 @@ static void emptyOutMatrix(matrix* m) {
         }
     }
     printf("Done with emptyOutMatrix\n"); 
+}
+
+static void randomOutMatrix (matrix *m){
+    printf("Entered randomOutMatrix\n");
+    //Uses the current time to generate seed
+    srand(time(0));
+    for (int i = 0; i< m->height; i++){
+        for (int j = 0; j< m->width; j++){
+            m->val[i][j] = rand();
+        }
+    }
+    printf("Done with randomOutMatrix\n"); 
+
+
 }
