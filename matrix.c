@@ -1,0 +1,81 @@
+#include "matrix.h"
+#include<stdio.h>
+#include<stdlib.h>
+
+// Static functions are only visibile in the file in which they're declared
+
+// Zero-s out all of the matri'x vals
+static void emptyOutMatrix(matrix* m);
+// Allocates memory for m->val based on m->width and m->height
+static void allocMatrixInternal(matrix* m);
+// Free all space associated with m->val
+static void freeMatrixInternal(matrix* m);
+
+matrix* createMatrix(int height, int width, enum matrixType type) {
+    matrix* m = malloc(sizeof(matrix));
+    m->width = width;
+    m->height = height;
+    allocMatrixInternal(m);
+
+    switch(type) {
+        case EMPTY:
+            emptyOutMatrix(m);
+            break;
+        case IDENTITY:
+            // TODO:
+            break;
+        case RANDOM:
+            // TODO:
+            break;
+        default:
+            break;
+    }
+    return m;
+}
+
+void printMatrix(matrix* m) {
+    for (int i = 0; i < m->height; i++) {
+        for (int j = 0; j < m->width; j++) {
+            printf("%d ", m->val[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
+void destroyMatrix(matrix* m) {
+
+}
+
+void fillRow(matrix* m, int rowToFill, int value) {
+
+}
+
+void fillCol(matrix* m, int colToFill, int value) {
+
+}
+
+static void freeMatrixInternal(matrix* m){
+    for (int i = 0; i < m->width; i++) {
+        free(m->val[i]);
+    }
+    free(m->val);
+}
+
+static void allocMatrixInternal(matrix* m){
+    m->val = (int**) malloc(m->width * sizeof(int));
+    for (int i = 0; i < m->width; i++) {
+        m->val[i] = (int*) malloc(m->height * sizeof(int));
+    }
+}
+
+static void emptyOutMatrix(matrix* m) {
+    printf("Entered emptyOutMatrix\n"); 
+    printf("m->height = %d, m->width = %d\n", m->height, m->width); 
+    for (int i = 0; i < m->height; i++) {
+        for (int j = 0; j < m->width; j++) {
+            m->val[i][j] = 0;
+        }
+    }
+    printf("Done with emptyOutMatrix\n"); 
+}
