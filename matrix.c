@@ -118,7 +118,7 @@ void flipVertical(matrix* m){
 
 matrix* copyMatrix(matrix* m){
     printf("Entered copyMatrix\n");
-    matrix *n = createMatrix(m->height, m->width, m->type);
+    matrix *n = createMatrix(m->height, m->width, type);
     printf("Done with copyMatrix\n");
     return n;
 }
