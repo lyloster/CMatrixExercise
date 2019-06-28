@@ -93,6 +93,32 @@ static void randomOutMatrix (matrix *m){
         }
     }
     printf("Done with randomOutMatrix\n"); 
+}
 
+/*
+0 1      ->  1 0
+2 3          3 2
+4 4          4 4
+*/
+void flipVertical(matrix* m){
+    printf("Entered flipVertical\n");
+    //Uses the current time to generate seed
+    for (int i = 0; i< m->height; i++){
+        for (int j = 0; j< m->width; j++){
+            //duplicates the last column
+            m->val[i][j]  = m->val[i][m->width-(j+1)] ; 
+            //TODO: Fix
+        }
+        
+        
+    }
+    printf("Done with flipVertical\n");
 
+}
+
+matrix* copyMatrix(matrix* m){
+    printf("Entered copyMatrix\n");
+    matrix *n = createMatrix(m->height, m->width, m->type);
+    printf("Done with copyMatrix\n");
+    return n;
 }
