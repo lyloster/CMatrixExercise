@@ -6,7 +6,7 @@ to compile me and run!
 Make sure you test your functions in the driver.c each time you implement them. Also make sure you test with non-square matrices.
 
 Tasks:
-1. Implement createMatrix for RANDOM matrixType. Look for how to create a random number in C online.
+1. Implement createMatrix for RANDOM matrixType. Look for how to create a random number in C online. --> DONE
 2. Implement flipVertical.
 3. Implement flipHorizontal.
 4. Implement copyMatrix. Re-use createMatrix
