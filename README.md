@@ -7,8 +7,8 @@ Make sure you test your functions in the driver.c each time you implement them. 
 
 Tasks:
 1. Implement createMatrix for RANDOM matrixType. Look for how to create a random number in C online. --> DONE
-2. Implement flipVertical. --> Working on
-3. Implement flipHorizontal.
+2. Implement flipVertical. --> DONE
+3. Implement flipHorizontal. --> DONE
 4. Implement copyMatrix. Re-use createMatrix. --> Working on
 5. Implement createMatrix for IDENTITY matrixType. You can levarage emptyOutMatrix() function.
 6. Implement inverseMatrix.
