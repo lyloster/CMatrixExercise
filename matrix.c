@@ -13,6 +13,8 @@ static void randomOutMatrix (matrix *m);
 static void allocMatrixInternal(matrix* m);
 // Free all space associated with m->val
 static void freeMatrixInternal(matrix* m);
+// Swaps the places of two integers
+static void swap(int *a, int *b);
 
 matrix* createMatrix(int height, int width, enum matrixType type) {
     matrix* m = malloc(sizeof(matrix));
@@ -51,10 +53,27 @@ void destroyMatrix(matrix* m) {
 }
 
 void fillRow(matrix* m, int rowToFill, int value) {
-
-}
+    printf("Entered fillRow\n"); 
+        for (int i = 0; i<m->width; i++){
+          for (int j = 0; j<m->height; j++){
+            if (j == rowToFill){
+                m->val[j][i] = value;
+            }
+          }
+        }
+    printf("Done with fillRow\n");
+    }
 
 void fillCol(matrix* m, int colToFill, int value) {
+    printf("Entered fillColumn\n"); 
+        for (int i = 0; i<m->width; i++){
+          for (int j = 0; j<m->height; j++){
+            if (j == colToFill){
+                m->val[i][j] = value;
+            }
+          }
+        }
+    printf("Done with fillColumn\n");
 
 }
 
@@ -102,23 +121,32 @@ static void randomOutMatrix (matrix *m){
 */
 void flipVertical(matrix* m){
     printf("Entered flipVertical\n");
-    //Uses the current time to generate seed
     for (int i = 0; i< m->height; i++){
-        for (int j = 0; j< m->width; j++){
-            //duplicates the last column
-            m->val[i][j]  = m->val[i][m->width-(j+1)] ; 
-            //TODO: Fix
+        for (int j = 0; j< m->width/2; j++){
+           swap(&m->val[i][j], &m->val[i][(m->width)-(j+1)]) ; 
         }
-        
-        
     }
     printf("Done with flipVertical\n");
-
 }
 
-matrix* copyMatrix(matrix* m){
-    printf("Entered copyMatrix\n");
-    matrix *n = createMatrix(m->height, m->width, type);
-    printf("Done with copyMatrix\n");
-    return n;
+void flipHorizontal(matrix* m){
+    printf("Entered flipHorizontal\n");
+    for (int i = 0; i< m->width; i++){
+        for (int j = 0; j< m->height/2; j++){
+           swap(&m->val[j][i], &m->val[(m->height)-(j+1)][i]) ; 
+        }
+    }
+    printf("Done with flipHorizontal\n");
 }
+static void swap (int *a, int *b){
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+// matrix* copyMatrix(matrix* m){
+//     printf("Entered copyMatrix\n");
+//     matrix *n = createMatrix(m->height, m->width, type);
+//     printf("Done with copyMatrix\n");
+//     return n;
+// }
