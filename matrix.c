@@ -60,13 +60,9 @@ void fillRow(matrix* m, int rowToFill, int value) {
     if (DEBUG){
         printf("Entered fillRow\n"); 
     }
-        for (int i = 0; i<m->width; i++){
-            if (i == rowToFill){
-                for (int j = 0; j<m->width; j++){
-                    m->val[rowToFill][j] = value;
-                }
-            }
-        }
+    for (int j = 0; j<m->width; j++){
+        m->val[rowToFill][j] = value;
+    }
     if (DEBUG){
         printf("Done with fillRow\n");
     }   
@@ -76,13 +72,9 @@ void fillCol(matrix* m, int colToFill, int value) {
     if (DEBUG){
         printf("Entered fillCol\n"); 
     }
-        for (int i = 0; i<m->height; i++){
-            if (i == colToFill){
-                for (int j = 0; j<m->height; j++){
-                    m->val[j][colToFill] = value;
-                }
-            }
-        }
+    for (int j = 0; j<m->height; j++){
+        m->val[j][colToFill] = value;
+    }
     if (DEBUG){
         printf("Done with fillCol\n");
     }   
