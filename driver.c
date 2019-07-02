@@ -29,9 +29,18 @@ int main(void){
     printMatrix(m);
     printf("After printMatrix and fillRow\n");
 
-    fillCol (m, 2, 2);
+    fillCol (m, 1, 2);
     printMatrix(m);
     printf("After printMatrix and fillCol\n");
+
+    matrix *n;
+    n = copyMatrix(m);
+    printMatrix(n);
+
+    matrix* idSq = createMatrix(4, 4, IDENTITY);
+    printMatrix(idSq);
+    matrix* id = createMatrix(3, 7, IDENTITY);
+    printMatrix(id);
 
     //destroyMatrix(m);
     return 0;

@@ -3,10 +3,14 @@
 #include<stdlib.h>
 #include <time.h>
 
+#define DEBUG 1
+
 // Static functions are only visibile in the file in which they're declared
 
 // Zero-s out all of the matri'x vals
 static void emptyOutMatrix(matrix* m);
+// Creates an identity-like matrix, works for all sizes
+static void identityOutMatrix (matrix *m);
 // Creates a matrix with random values
 static void randomOutMatrix (matrix *m);
 // Allocates memory for m->val based on m->width and m->height
@@ -27,7 +31,7 @@ matrix* createMatrix(int height, int width, enum matrixType type) {
             emptyOutMatrix(m);
             break;
         case IDENTITY:
-            // TODO:
+            identityOutMatrix(m);
             break;
         case RANDOM:
             randomOutMatrix (m);
@@ -53,28 +57,35 @@ void destroyMatrix(matrix* m) {
 }
 
 void fillRow(matrix* m, int rowToFill, int value) {
-    printf("Entered fillRow\n"); 
-        for (int i = 0; i<m->width; i++){
-          for (int j = 0; j<m->height; j++){
-            if (j == rowToFill){
-                m->val[j][i] = value;
-            }
-          }
-        }
-    printf("Done with fillRow\n");
+    if (DEBUG){
+        printf("Entered fillRow\n"); 
     }
+        for (int i = 0; i<m->width; i++){
+            if (i == rowToFill){
+                for (int j = 0; j<m->width; j++){
+                    m->val[rowToFill][j] = value;
+                }
+            }
+        }
+    if (DEBUG){
+        printf("Done with fillRow\n");
+    }   
+}
 
 void fillCol(matrix* m, int colToFill, int value) {
-    printf("Entered fillColumn\n"); 
-        for (int i = 0; i<m->width; i++){
-          for (int j = 0; j<m->height; j++){
-            if (j == colToFill){
-                m->val[i][j] = value;
+    if (DEBUG){
+        printf("Entered fillCol\n"); 
+    }
+        for (int i = 0; i<m->height; i++){
+            if (i == colToFill){
+                for (int j = 0; j<m->height; j++){
+                    m->val[j][colToFill] = value;
+                }
             }
-          }
         }
-    printf("Done with fillColumn\n");
-
+    if (DEBUG){
+        printf("Done with fillCol\n");
+    }   
 }
 
 static void freeMatrixInternal(matrix* m){
@@ -92,18 +103,42 @@ static void allocMatrixInternal(matrix* m){
 }
 
 static void emptyOutMatrix(matrix* m) {
-    printf("Entered emptyOutMatrix\n"); 
+    if (DEBUG){
+        printf("Entered emptyOutMatrix\n"); 
+    } 
     printf("m->height = %d, m->width = %d\n", m->height, m->width); 
     for (int i = 0; i < m->height; i++) {
         for (int j = 0; j < m->width; j++) {
             m->val[i][j] = 0;
         }
     }
-    printf("Done with emptyOutMatrix\n"); 
+    if (DEBUG){
+        printf("Done with emptyOutMatrix\n");
+    }
+}
+
+static void identityOutMatrix (matrix *m){
+    if (DEBUG){
+        printf("Entered identityOutMatrix\n"); 
+    }  
+    for (int i = 0; i < m->height; i++) {
+        for (int j = 0; j < m->width; j++) {
+            if (i==j){
+                m->val[i][j] = 1;
+            }else{
+               m->val[i][j] = 0; 
+            }
+        }
+    }
+    if (DEBUG){
+        printf("Done with identityOutMatrix\n");
+    }
 }
 
 static void randomOutMatrix (matrix *m){
-    printf("Entered randomOutMatrix\n");
+    if (DEBUG){
+        printf("Entered randomOutMatrix\n"); 
+    }
     //Uses the current time to generate seed
     srand(time(0));
     for (int i = 0; i< m->height; i++){
@@ -111,7 +146,9 @@ static void randomOutMatrix (matrix *m){
             m->val[i][j] = rand();
         }
     }
-    printf("Done with randomOutMatrix\n"); 
+    if (DEBUG){
+        printf("Done with randomOutMatrix\n"); 
+    }
 }
 
 /*
@@ -120,23 +157,31 @@ static void randomOutMatrix (matrix *m){
 4 4          4 4
 */
 void flipVertical(matrix* m){
-    printf("Entered flipVertical\n");
+    if (DEBUG){
+        printf("Entered flipVertical\n"); 
+    }
     for (int i = 0; i< m->height; i++){
         for (int j = 0; j< m->width/2; j++){
            swap(&m->val[i][j], &m->val[i][(m->width)-(j+1)]) ; 
         }
     }
-    printf("Done with flipVertical\n");
+    if (DEBUG){
+        printf("Done with flipVertical\n");
+    }  
 }
 
 void flipHorizontal(matrix* m){
-    printf("Entered flipHorizontal\n");
+    if (DEBUG){
+        printf("Entered flipHorizontal\n"); 
+    }
     for (int i = 0; i< m->width; i++){
         for (int j = 0; j< m->height/2; j++){
            swap(&m->val[j][i], &m->val[(m->height)-(j+1)][i]) ; 
         }
     }
-    printf("Done with flipHorizontal\n");
+    if (DEBUG){
+        printf("Done with flipHorizontal\n");
+    }  
 }
 static void swap (int *a, int *b){
     int temp = *a;
@@ -144,9 +189,25 @@ static void swap (int *a, int *b){
     *b = temp;
 }
 
-// matrix* copyMatrix(matrix* m){
-//     printf("Entered copyMatrix\n");
-//     matrix *n = createMatrix(m->height, m->width, type);
-//     printf("Done with copyMatrix\n");
-//     return n;
-// }
+matrix* copyMatrix(matrix* m){
+    if (DEBUG){
+        printf("Entered copyMatrix\n"); 
+    }
+    matrix* n = malloc(sizeof(matrix));
+    n->width = m->width;
+    n->height = m->height;
+    allocMatrixInternal(n);
+    for (int i = 0; i< m->height; i++){
+        for (int j = 0; j< m->width; j++){
+           n->val[i][j] = m->val[i][j] ; 
+        }
+    }
+    if (DEBUG){
+        printf("Done with copyMatrix\n");
+    }  
+    return n;
+ }
+
+
+
+
