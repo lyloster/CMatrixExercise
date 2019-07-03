@@ -200,6 +200,57 @@ matrix* copyMatrix(matrix* m){
     return n;
  }
 
+/*1. Copy m so we don't lose it's values - we'll still need these
+2. Free m's vals (using freeMatrixInternal) - we'll be changing its dimensions. We need to free before we allocate again otherwise we'll introduce a memory leak.
+3. Change m's width and height.
+4. Allocate m's vals using the new width and height (using allocMatrixInternal). At this point m vals are garbage so we still need to set them.
+5. Fill m's values properly referencing the copied matrix.
+6. Destroy the copied matrix using destroyMatrix so we don't introduce a memory leak.
+*/
+void inverseMatrix(matrix* m){
+    if (DEBUG){
+        printf("Entered inverseMatrix\n"); 
+    } 
+
+    matrix *n = copyMatrix(m);
+    freeMatrixInternal(m);
+    int temp = m->width;
+    m->width = m->height;
+    m->height = temp;
+    allocMatrixInternal(m);
+    for (int i = 0; i<m->width; i++){
+        for(int j = 0; j<m->height; j++){
+            m->val[i][j] = n->val[j][i];
+        }
+    }
+
+    if (DEBUG){
+            printf("Done with inverseMatrix\n"); 
+    } 
+}
 
 
 
+// Rotations..
+
+
+/*
+0 1 2    ->    2 5
+3 4 5          1 4
+               0 3
+*/
+// void rotateLeft(matrix* m){
+//     if (DEBUG){
+//         printf("Entered rotateLeft\n"); 
+//     } 
+
+//     inverseMatrix(m);
+//     for(int i = 0; i<m->width/2; i++){
+//         swap(&m->val[i], &m->val[(m->width)]);
+        
+//     }
+
+//     if (DEBUG){
+//         printf("Done with rotateLeft\n"); 
+//     }
+// }

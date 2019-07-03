@@ -42,6 +42,19 @@ int main(void){
     matrix* id = createMatrix(3, 7, IDENTITY);
     printMatrix(id);
 
+    inverseMatrix(m);
+    printMatrix(m);
+
+    // matrix* z = createMatrix(2,5, EMPTY);
+    // z->val[0][0] = 0;
+    // z->val[0][1] = 1;
+    // z->val[0][2] = 2;
+    // z->val[0][3] = 3;
+    // z->val[0][4] = 4;
+    // z->val[0][5] = 5;
+    // printMatrix(z);
+    // rotateLeft(z);
+    // printMatrix(z);
     //destroyMatrix(m);
     return 0;
 }
