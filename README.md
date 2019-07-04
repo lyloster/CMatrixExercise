@@ -11,6 +11,6 @@ Tasks:
 3. Implement flipHorizontal. --> DONE
 4. Implement copyMatrix. Re-use createMatrix. --> DONE
 5. Implement createMatrix for IDENTITY matrixType. You can levarage emptyOutMatrix() function. --> DONE
-6. Implement inverseMatrix. --> Working on
-7. Implement rotateLeft. Follow similar steps to inverseMatrix. --> Working on
-8. Implement rotateRight. Follow similar steps to inverseMatrix.
+6. Implement inverseMatrix. --> DONE
+7. Implement rotateLeft. Follow similar steps to inverseMatrix. --> DONE
+8. Implement rotateRight. Follow similar steps to inverseMatrix. --> DONE
