@@ -3,7 +3,7 @@
 #include<stdlib.h>
 #include <time.h>
 
-#define DEBUG 1
+#define DEBUG 0
 
 // Static functions are only visibile in the file in which they're declared
 
@@ -20,7 +20,7 @@ static void freeMatrixInternal(matrix* m);
 // Swaps the places of two integers
 static void swap(int *a, int *b);
 
-matrix* createMatrix(int height, int width, enum matrixType type) {
+matrix* createMatrix(int width, int height, enum matrixType type) {
     matrix* m = malloc(sizeof(matrix));
     m->width = width;
     m->height = height;
@@ -81,16 +81,32 @@ void fillCol(matrix* m, int colToFill, int value) {
 }
 
 static void freeMatrixInternal(matrix* m){
-    for (int i = 0; i < m->width; i++) {
+    if (DEBUG){
+        printf("Entered freeMatrixInternal\n"); 
+    }
+
+    for (int i = 0; i < m->height; i++) {
         free(m->val[i]);
     }
     free(m->val);
+
+     if (DEBUG){
+        printf("Done with freeMatrixInternal\n");
+    }
 }
 
 static void allocMatrixInternal(matrix* m){
-    m->val = (int**) malloc(m->width * sizeof(int));
-    for (int i = 0; i < m->width; i++) {
-        m->val[i] = (int*) malloc(m->height * sizeof(int));
+    if (DEBUG){
+        printf("Entered allocateMatrixInternal\n"); 
+    } 
+
+    m->val = (int**) malloc(m->height * sizeof(int*));
+    for (int i = 0; i < m->height; i++) {
+        m->val[i] = (int*) malloc(m->width * sizeof(int));
+    }
+
+    if (DEBUG){
+        printf("Done with allocateMatrixInternal\n");
     }
 }
 
@@ -135,7 +151,7 @@ static void randomOutMatrix (matrix *m){
     srand(time(0));
     for (int i = 0; i< m->height; i++){
         for (int j = 0; j< m->width; j++){
-            m->val[i][j] = rand();
+            m->val[i][j] = rand()%100;
         }
     }
     if (DEBUG){
@@ -154,7 +170,7 @@ void flipVertical(matrix* m){
     }
     for (int i = 0; i< m->height; i++){
         for (int j = 0; j< m->width/2; j++){
-           swap(&m->val[i][j], &m->val[i][(m->width)-(j+1)]) ; 
+           swap(&m->val[i][j], &m->val[i][(m->width)-(j+1)]); 
         }
     }
     if (DEBUG){
@@ -200,13 +216,7 @@ matrix* copyMatrix(matrix* m){
     return n;
  }
 
-/*1. Copy m so we don't lose it's values - we'll still need these
-2. Free m's vals (using freeMatrixInternal) - we'll be changing its dimensions. We need to free before we allocate again otherwise we'll introduce a memory leak.
-3. Change m's width and height.
-4. Allocate m's vals using the new width and height (using allocMatrixInternal). At this point m vals are garbage so we still need to set them.
-5. Fill m's values properly referencing the copied matrix.
-6. Destroy the copied matrix using destroyMatrix so we don't introduce a memory leak.
-*/
+
 void inverseMatrix(matrix* m){
     if (DEBUG){
         printf("Entered inverseMatrix\n"); 
@@ -218,8 +228,8 @@ void inverseMatrix(matrix* m){
     m->width = m->height;
     m->height = temp;
     allocMatrixInternal(m);
-    for (int i = 0; i<m->width; i++){
-        for(int j = 0; j<m->height; j++){
+    for (int i = 0; i<m->height; i++){
+        for(int j = 0; j<m->width; j++){
             m->val[i][j] = n->val[j][i];
         }
     }
@@ -239,18 +249,30 @@ void inverseMatrix(matrix* m){
 3 4 5          1 4
                0 3
 */
-// void rotateLeft(matrix* m){
-//     if (DEBUG){
-//         printf("Entered rotateLeft\n"); 
-//     } 
 
-//     inverseMatrix(m);
-//     for(int i = 0; i<m->width/2; i++){
-//         swap(&m->val[i], &m->val[(m->width)]);
-        
-//     }
+//easy inefficient solution, try with indexing
+void rotateLeft(matrix* m){
+    if (DEBUG){
+        printf("Entered rotateLeft\n"); 
+    } 
 
-//     if (DEBUG){
-//         printf("Done with rotateLeft\n"); 
-//     }
-// }
+    inverseMatrix(m);
+    flipHorizontal(m);
+
+    if (DEBUG){
+        printf("Done with rotateLeft\n"); 
+    }
+}
+
+void rotateRight(matrix* m){
+    if (DEBUG){
+        printf("Entered rotateLeft\n"); 
+    } 
+
+    inverseMatrix(m);
+    flipVertical(m);
+
+    if (DEBUG){
+        printf("Done with rotateLeft\n"); 
+    }
+}
