@@ -2,62 +2,29 @@
 #include "matrix.h"
 
 void testFlipHorizontal();
+void testFlipVertical();
+void testFillRow();
+void testFillColumn();
+void testCopyMatrix();
+void testIdentityMatrix();
+void testInverseMatrix();
+void testRandomMatrix();
+void testRotateLeft();
+void testRotateRight();
 
 int main(void){
     printf("Entered the program\n");
-    
-
     testFlipHorizontal();
-   
-    // printf("After printMatrix m\n");
-
-    // flipVertical(m);
-    // printMatrix(m);
-    // printf("After printMatrix and flipVertical\n");
-
-    
-
-    // fillRow (m, 1, 1);
-    // printMatrix(m);
-    // printf("After printMatrix and fillRow\n");
-
-    // fillCol (m, 1, 2);
-    // printMatrix(m);
-    // printf("After printMatrix and fillCol\n");
-
-    // matrix *n;
-    // n = copyMatrix(m);
-    // printMatrix(n);
-
-    // // matrix* idSq = createMatrix(4, 4, IDENTITY);
-    // // printMatrix(idSq);
-    // // matrix* id = createMatrix(3, 7, IDENTITY);
-    // // printMatrix(id);
-
-    // printMatrix(m);
-    // inverseMatrix(m);
-    // printMatrix(m);
-
-    // inverseMatrix(m);
-    // printMatrix(m);
-
-    // matrix* z = createMatrix(2,6, EMPTY);
-    // z->val[0][0] = 0;
-    // z->val[0][1] = 1;
-    // z->val[0][2] = 2;
-    // z->val[0][3] = 3;
-    // z->val[0][4] = 4;
-    // z->val[0][5] = 5;
-    // printMatrix(z);
-    // rotateLeft(z);
-    // printMatrix(z);
-
-    // matrix *random = createMatrix(2,8,RANDOM);
-    // printMatrix(random);
-
+    testFlipVertical();
+    testFillRow();
+    testFillColumn();
+    testCopyMatrix();
+    testIdentityMatrix();
+    testIdentityMatrix();
+    testRandomMatrix();
+    testRotateLeft();
+    testRotateRight();
     printf("Done!\n");
-
-    //destroyMatrix(m);
     return 0;
 }
 
@@ -67,5 +34,88 @@ void testFlipHorizontal(){
     flipHorizontal(m);
     printf("After flipHorizontal:\n");
     printMatrix(m);
+    destroyMatrix(m);
+}
+
+void testFlipVertical (){
+    matrix* m = createMatrix(5, 4, RANDOM);
+    printMatrix(m);
+    flipVertical(m);
+    printf("After flipVertical:\n");
+    printMatrix(m);
+    destroyMatrix(m);
+}
+
+void testFillRow(){
+    matrix* m = createMatrix(5, 4, RANDOM);
+    printMatrix(m);
+    fillRow(m, 1, 2);
+    printf("After fillRow:\n");
+    printMatrix(m);
+    destroyMatrix(m);
+}
+
+void testFillColumn(){
+    matrix* m = createMatrix(5, 4, RANDOM);
+    printMatrix(m);
+    fillCol (m, 1, 2);
+    printf("After fillCol:\n");
+    printMatrix(m);
+    destroyMatrix(m);
+}
+
+void testCopyMatrix(){
+    matrix* m = createMatrix(5, 4, RANDOM);
+    printMatrix(m);
+    matrix *n;
+    n = copyMatrix(m);
+    printf("After copyMatrix:\n");
+    printMatrix(n);
+    destroyMatrix(m);
+    destroyMatrix(n);
+}
+
+void testIdentityMatrix(){
+    matrix* idSq = createMatrix(4, 4, IDENTITY);
+    printf("Square identity matrix:\n");
+    printMatrix(idSq);
+
+    matrix* id = createMatrix(5, 3, IDENTITY);
+    printf("Identity-like matrix:\n");
+    printMatrix(id);
+
+    destroyMatrix(idSq);
+    destroyMatrix(id);
+}
+
+void testInverseMatrix(){
+    matrix* m = createMatrix(5, 4, RANDOM);
+    printMatrix(m);
+    inverseMatrix(m);
+    printf("After inverseMatrix:\n");
+    printMatrix(m);
+    destroyMatrix(m);
+}
+
+void testRandomMatrix(){
+    matrix* rand = createMatrix(4, 4, RANDOM);
+    printf("Random matrix:\n");
+    printMatrix(rand);
+    destroyMatrix(rand);
+}
+
+void testRotateLeft(){
+    matrix* m = createMatrix(5, 4, RANDOM);
+    printMatrix(m);
+    printf("After ritateLeft:\n");
+    rotateLeft(m);
+    destroyMatrix(m);
+}
+
+void testRotateRight(){
+    matrix* m = createMatrix(5, 4, RANDOM);
+    printMatrix(m);
+    printf("After ritateRight:\n");
+    rotateRight(m);
     destroyMatrix(m);
 }
